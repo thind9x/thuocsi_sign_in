@@ -9,6 +9,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import "../../register/Register.scss";
+import Checkbox from "@material-ui/core/Checkbox";
+
 const Login = () => {
   const {
     register,
@@ -131,8 +133,15 @@ const Login = () => {
               </div>
               <div className="row">
                 <span style={{ fontSize: "14px", marginLeft: "3%" }}>
-                  <input style={{ fontSize: "14px" }} type="checkbox" /> Giữ tôi
-                  luôn đăng nhập
+                  <input
+                    style={{
+                      fontSize: "14px",
+
+                      filter: " hue-rotate(240deg)",
+                    }}
+                    type="checkbox"
+                  />{" "}
+                  Giữ tôi luôn đăng nhập
                 </span>
                 <Link
                   to="/forgot-password"
