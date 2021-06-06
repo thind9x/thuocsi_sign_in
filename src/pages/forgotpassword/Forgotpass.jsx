@@ -1,94 +1,95 @@
+import { InputBase } from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
+
 import axios from "axios";
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import "../login/components/Login.scss";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useHistory, withRouter } from "react-router-dom";
+import "../register/Register.scss";
 import ArrrowBack from "@material-ui/icons/ArrowBack";
 
-class Forgotpass extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      error: "",
-      buttondis: true,
-    };
+const Forgotpass = () => {
+  const {
+    register,
+    handleSubmit,
 
-    this.handeSubmit = this.handeSubmit.bind(this);
-  }
-  handeSubmit = (e) => {
+    formState: { isDirty, isValid, errors }, // here
+  } = useForm({ mode: "onChange" });
+  const history = useHistory();
+  const [error, setError] = useState("");
+  const onSubmit = (data) => {
+    var email = data.email;
+    console.log(data);
     axios
       .post(
         "https://api.v2-dev.thuocsi.vn/interview/account/forgot-password/otp",
         {
-          email: this.state.email,
+          email: email,
         }
       )
       .then(
         (res) => {
-          console.log(res);
-          this.props.history.push("/verify-otp?email=" + this.state.email);
+          history.push("verify-otp?email=" + email);
         },
         (error) => {
           console.log(error);
-          this.setState({
-            error: "Địa chỉ email không tồn tại",
-          });
+          setError("Địa chỉ email không tồn tại");
         }
       );
-    e.preventDefault();
   };
-  render() {
-    return (
-      <div className="back">
-        <div className="div-center">
-          <div className="content">
-            <p
-              onClick={(e) => {
-                this.props.history.goBack();
-              }}
+
+  return (
+    <div className="containter-fluid">
+      <div className="col-lg-12 ">
+        <div className="row">
+          <div id="forgotpass" className="col-lg-6">
+            <form
+              method="post"
+              onSubmit={handleSubmit(onSubmit)}
+              id="formforgot"
             >
-              {" "}
-              <ArrrowBack
-                style={{ fontSize: 50, marginBottom: 20, cursor: "pointer" }}
-              />
-            </p>
-            <h3 style={{ textAlign: "left" }}>Quên mật khẩu</h3>
-            <hr />
-            <form method="post" onSubmit={this.handeSubmit}>
-              <p style={{ fontSize: "12px", color: "red" }}>
-                {this.state.error}
-              </p>
-              <div className="form-group">
-                <label for="exampleInputEmail1">
-                  Vui lòng nhập email để nhận mã xác thực
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  placeholder="Email"
-                  required={true}
-                  onChange={(e) => {
-                    var re = /\S+@\S+\.\S+/;
-                    if (re.test(e.target.value) === false) {
-                      this.setState({
-                        error: "Vui lòng nhập email hợp lê",
-                        buttondis: true,
-                      });
-                    } else {
-                      this.setState({
-                        error: "",
-                        email: e.target.value,
-                        buttondis: false,
-                      });
-                    }
-                  }}
+              <p
+                onClick={(e) => {
+                  history.goBack();
+                }}
+              >
+                {" "}
+                <ArrrowBack
+                  style={{ fontSize: 50, marginBottom: 20, cursor: "pointer" }}
                 />
+              </p>
+              <h3 style={{ textAlign: "left" }}>Quên mật khẩu </h3>
+              <p>Vui lòng nhập email để nhận mã xác thực</p>
+              <p>{error}</p>
+              <div className="form-group">
+                <FormControl variant="outlined" className="col-sm-12">
+                  <label for="exampleInputEmail1">
+                    Email<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <InputBase
+                    className="form-control"
+                    type="text"
+                    placeholder="Nhập email"
+                    {...register("email", {
+                      required: true,
+
+                      pattern: /\S+@\S+\.\S+/,
+                    })}
+                    labelWidth={70}
+                  />
+                </FormControl>
+
+                <p style={{ color: "red", fontSize: "13px" }}>
+                  {errors.email?.type === "required" && "Vui lòng nhập email"}
+                  {errors.email?.type === "pattern" &&
+                    "Vui lòng nhập email hợp lệ"}
+                </p>
               </div>
 
               <button
+                disabled={!isDirty || !isValid} // here
                 className="btn btn-success w-100"
-                disabled={this.state.buttondis}
+                type="submit"
               >
                 Gửi
               </button>
@@ -96,8 +97,8 @@ class Forgotpass extends Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default withRouter(Forgotpass);
+export default Forgotpass;

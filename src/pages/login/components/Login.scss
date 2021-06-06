@@ -1,11 +1,13 @@
 .back {
-  background: #e2e2e2;
-  width: 100%;
+}
+.otpmodal {
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
-
 .div-center {
   width: 600px;
   height: 500px;
@@ -30,6 +32,9 @@ div.content {
 }
 @media (orientation: portrait) {
   .div-center {
+    width: 100%;
+  }
+  div.content {
     width: 100%;
   }
 }

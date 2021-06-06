@@ -5,7 +5,7 @@ const SigupSucess = () => {
   return (
     <div className="back">
       <div className="div-center">
-        <div className="content">
+        <div className="content" id="formboxshad">
           <p style={{ textAlign: "center" }}>
             <i
               style={{

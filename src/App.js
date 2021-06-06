@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Register from "./pages/register/Register";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./pages/login/components/Login";
 import SigupSucess from "./pages/signupsuccess/SigupSucess";
 import Forgotpass from "./pages/forgotpassword/Forgotpass";
@@ -14,10 +14,11 @@ const Menu = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Login} />
+        <Route path="/" exact component={Register} />
         <Route path="/forgot-password" exact component={Forgotpass} />
         <Route path="/login-success" exact component={LoginSuccess} />
         <Route path="/verify-otp" exact component={Verify} />
+
         <Route path="/reset-password" exact component={Newpassword} />
         <Route
           path="/reset-password-success"
