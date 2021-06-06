@@ -62,9 +62,9 @@ const Newpassword = () => {
   };
 
   return (
-    <div className="back">
-      <div className="div-center">
-        <div className="content">
+    <div className="container">
+      <div className="col-lg-12">
+        <div id="forgotpass" className="col-lg-6">
           <p
             onClick={(e) => {
               history.goBack();
